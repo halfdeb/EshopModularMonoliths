@@ -8,3 +8,7 @@ global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Configuration;
 global using Catalog.Data.Seed;
+global using Catalog.Products.Dto;
+global using MediatR;
+global using Shared.CQRS;
+global using Mapster;
