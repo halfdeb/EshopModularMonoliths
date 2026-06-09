@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Shared.CQRS;
 
 public interface IQueryHandler<in TQuery, TResponse>

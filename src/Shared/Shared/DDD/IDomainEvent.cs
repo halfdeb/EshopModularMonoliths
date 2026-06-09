@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Shared.DDD;
 
 public interface IDomainEvent : INotification

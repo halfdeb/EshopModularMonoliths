@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.EntityFrameworkCore.Update;
-
 namespace Shared.CQRS;
 
 public interface ICommandHandler<in TCommand> : ICommandHandler<TCommand, Unit>
