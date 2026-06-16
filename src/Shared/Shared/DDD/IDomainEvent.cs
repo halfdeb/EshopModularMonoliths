@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 namespace Shared.DDD;
 
 public interface IDomainEvent : INotification
