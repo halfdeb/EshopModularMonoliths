@@ -12,3 +12,5 @@ global using Catalog.Products.Dto;
 global using MediatR;
 global using Shared.CQRS;
 global using Mapster;
+global using Catalog.Products.Events;
+global using Microsoft.Extensions.Logging;
