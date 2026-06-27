@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Shared.Behaviours;
 using Shared.Data;
+using Shared.Data.Interceptors;
 using Shared.Data.Seed;
 
 namespace Catalog;
@@ -7,13 +10,26 @@ public static class CatalogModule
 {
     public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+        });
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        
         var connectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext <CatalogDbContext> (options =>
-            options.UseNpgsql(connectionString));
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
+        services.AddDbContext<CatalogDbContext>((sp, options) =>
+        {
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.UseNpgsql(connectionString);
+        });
 
         services.AddScoped<IDataSeeder, CatalogDataSeeder>();
-        
+
         return services;
     }
 
