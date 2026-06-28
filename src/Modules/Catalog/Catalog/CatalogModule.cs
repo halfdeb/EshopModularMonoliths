@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Shared.Behaviors;
 using Shared.Behaviours;
 using Shared.Data;
 using Shared.Data.Interceptors;
@@ -14,6 +15,7 @@ public static class CatalogModule
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         

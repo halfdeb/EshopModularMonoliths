@@ -1,3 +1,5 @@
+using Catalog.Products.Exception;
+
 namespace Catalog.Products.Features.UpdateProduct;
 
 public record UpdateProductCommand(ProductDto Product)
@@ -24,7 +26,7 @@ internal class UpdateProductHandler(CatalogDbContext dbContext)
 
         if (product is null)
         {
-            throw new Exception($"Product with id: {command.Product.Id} does not exist");
+            throw new ProductNotFoundException(command.Product.Id);
         }
 
         UpdateProductWithNewValues(product, command.Product);
